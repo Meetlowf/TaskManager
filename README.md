@@ -7,11 +7,10 @@
 ## activate the env
 ```<your_folder>\scripts\activate```
 ```env\scripts\activate```
-```env\scripts\activate.bat```
-
 
 ## deactivate 
 ```deactivate```
 
+## create new database, in python
 ```from app import db```
 ```db.create_all()```
