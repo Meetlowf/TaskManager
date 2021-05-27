@@ -6,17 +6,52 @@
 
 {% block body %}
 <div class="content">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+                <span class="first">Project</span><span class="second">Manager</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link active" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projects</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if projects|length < 1 %}
+                                <li>There are currently no projects.</li>
+                            {% else %}
+                            {% for project in projects %}
+                                <li><a href="/task/{{project.id}}" class="dropdown-item">{{project.name}}</a></li>
+                            {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <br>
     <h1>Task Manager</h1>
     <h2>{{ project.name }}</h2>
     <br>
-    <form action="/task/{{project.id}}" method="POST">
-        <input type="text" name="content" id="content" autocomplete="off" placeholder="New Task">
-        <input class="btn btn-primary" type="submit" value="Add Task">
-    </form>
-    <br>
-    <div class="return-button">
-        <a class="btn btn-secondary" href="/">Return to Project Menu</a>
+    <div class="form-wrapper">
+        <form action="/task/{{project.id}}" method="POST">
+            <fieldset class="form-field">
+                {{ form.date.label }}
+                {{ form.date }}
+            </fieldset>
+            <fieldset class="form-field">
+                {{ form.content.label }}
+                {{ form.content(autocomplete="off") }}
+            </fieldset>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Add Task">
+        </form>
     </div>
     <br>
     {% if tasks|length < 1 %}
@@ -27,12 +62,14 @@
             <tr>
                 <th>Task</th>
                 <th>Added</th>
+                <th>Due Date</th>
                 <th>Actions</th>
             </tr>
             {% for task in tasks %}
                 <tr>
                     <td>{{ task.content }}</td>
                     <td>{{ task.date_created.date() }}</td>
+                    <td>{{ task.date_due }}</td>
                     <td>
                         <a class="btn btn-danger btn-sm" href="/delete/{{task.id}}/{{project.id}}">Delete</a>
                         <a class="btn btn-primary btn-sm" href="/update/{{task.id}}/{{project.id}}">Edit</a>
