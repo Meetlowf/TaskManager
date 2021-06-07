@@ -8,7 +8,7 @@
 <div class="content">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">
+            <a href="/project/" class="navbar-brand">
                 <span class="first">Project</span><span class="second">Manager</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +17,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a href="/" class="nav-link active" aria-current="page">Home</a>
+                        <a href="/project/" class="nav-link active" aria-current="page">Home</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Projects</a>
@@ -26,7 +26,7 @@
                                 <li>There are currently no projects.</li>
                             {% else %}
                             {% for project in projects %}
-                                <li><a href="/task/{{project.id}}" class="dropdown-item">{{project.name}}</a></li>
+                                <li><a href="/project/{{project.id}}" class="dropdown-item">{{project.name}}</a></li>
                             {% endfor %}
                             {% endif %}
                         </ul>
@@ -40,7 +40,7 @@
     <h2>{{ project.name }}</h2>
     <br>
     <div class="form-wrapper">
-        <form action="/task/{{project.id}}" method="POST">
+        <form action="/project/{{project.id}}" method="POST">
             <fieldset class="form-field">
                 {{ form.date.label }}
                 {{ form.date }}
@@ -62,7 +62,7 @@
             <tr>
                 <th>Done</th>
                 <th>Task</th>
-                <th>Added</th>
+                <th>Date Added</th>
                 <th>Due Date</th>
                 <th>Actions</th>
             </tr>
@@ -91,9 +91,9 @@
                     <td>{{ task.date_created.date() }}</td>
                     <td>{{ task.date_due }}</td>
                     <td>
-                        <a class="btn btn-danger btn-sm" href="/delete/{{task.id}}/{{project.id}}">Delete</a>
+                        <a class="btn btn-danger btn-sm" href="/project/{{project.id}}/task_delete/{{task.id}}">Delete</a>
                         <button onclick="taskEdit(id, {{project.id}})" class="btn btn-primary btn-sm" id="{{task.id}}" data-bs-toggle="modal" data-bs-target="#taskUpdateModal">Edit</button> 
-                        <a class="btn btn-success btn-sm" href="/done/{{task.id}}/{{project.id}}">Done</a>
+                        <a class="btn btn-success btn-sm" href="/project/{{project.id}}/task_done/{{task.id}}">Done</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -110,7 +110,7 @@
                 </div>
                 <div class="modal-body">
                     <p id="test2">
-                        <form action="/update/1/{{project.id}}" method="POST" id="editForm">
+                        <form action="/project/{{project.id}}/task_update/num/" method="POST" id="editForm">
                             <input type="text" name="content" id="test1" value="" autocomplete="off">
                             <input class="btn btn-primary" type="submit" value="Update">
                         </form>
@@ -135,7 +135,7 @@
                 return b;
             })
             document.getElementById("test1").setAttribute("value", rec.content); // innerHTML; // = rec.content;
-            document.getElementById("editForm").setAttribute("action", "/update/" + id + "/" + pid);
+            document.getElementById("editForm").setAttribute("action", "/project/" + pid + "/task_update/" + id);
         }
     </script>
 

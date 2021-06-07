@@ -14,3 +14,10 @@
 ## create new database, in python
 ```from app import db```
 ```db.create_all()```
+
+
+## start your application
+$env:FLASK_APP="/app.py"
+
+## set the enviroment
+$env:FLASK_ENV="development"

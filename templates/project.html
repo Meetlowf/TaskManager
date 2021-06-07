@@ -8,7 +8,7 @@
 <div class="content">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">
+            <a href="/project" class="navbar-brand">
                 <span class="first">Project</span><span class="second">Manager</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,7 @@
                                 <li>There are currently no projects.</li>
                             {% else %}
                             {% for project in projects %}
-                                <li><a href="/task/{{project.id}}" class="dropdown-item">{{project.name}}</a></li>
+                                <li><a href="/project/{{project.id}}" class="dropdown-item">{{project.name}}</a></li>
                             {% endfor %}
                             {% endif %}
                         </ul>
@@ -39,7 +39,7 @@
     <h1>Project Manager</h1>
     <br>
     <div class="form-wrapper">
-        <form action="/" method="POST">
+        <form action="/project/" method="POST">
             <fieldset class="form-field">
                 {{ form.date.label }}
                 {{ form.date }}
@@ -73,7 +73,7 @@
                         <!-- <a class="btn btn-danger btn-sm" href="/pdelete/{{project.id}}">Delete</a> -->
                         <!-- <a data-href="/pdelete/{{project.id}}" id={{project.id}} class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#projectDeleteModal">Delete</a> -->
                         <button onclick="modalDelete(id)" class="btn btn-danger btn-sm" id="{{project.id}}" data-bs-toggle="modal" data-bs-target="#projectDeleteModal">Delete</button>
-                        <a class="btn btn-primary btn-sm" href="/task/{{project.id}}">Edit</a>
+                        <a class="btn btn-primary btn-sm" href="/project/{{project.id}}">Edit</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -102,7 +102,7 @@
         function modalDelete(num) {
             var modalButton = document.getElementById("modal_delete")
             modalButton.getAttribute("href");
-            modalButton.setAttribute("href", "/pdelete/" + num);
+            modalButton.setAttribute("href", "/project/" + num + "/project_delete");
         }
     </script>
 </div>
