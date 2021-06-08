@@ -46,3 +46,8 @@ form {
 .main-title {
     font-size: 50px;
 }
+
+.alert.alert-success{
+    margin-left: 500px;
+    margin-right: 500px;
+}

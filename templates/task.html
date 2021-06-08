@@ -54,6 +54,16 @@
         </form>
     </div>
     <br>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert" id="alertmessage">
+                    <strong>Success! </strong> Task updated.
+                    <button type="button" class="close" data-dismiss="alert" onclick="close_flash_message();">x</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     {% if tasks|length < 1 %}
     <h4>There are no tasks, create one above.</h4>
     {% else %}
@@ -109,12 +119,17 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="test2">
-                        <form action="/project/{{project.id}}/task_update/num/" method="POST" id="editForm">
-                            <input type="text" name="content" id="test1" value="" autocomplete="off">
-                            <input class="btn btn-primary" type="submit" value="Update">
-                        </form>
-                    </p>
+                    <form action="/project/pid/task_update/num/" method="POST" id="editForm">
+                        <fieldset class="form-field">
+                            {{ form1.date.label }}
+                            {{ form1.date }}
+                        </fieldset>
+                        <fieldset class="form-field"> 
+                            {{ form1.content.label }}
+                            {{ form1.content(autocomplete="off") }}
+                        </fieldset>
+                        <input class="btn btn-primary" type="submit" value="Update" id="myWish">
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
@@ -127,16 +142,30 @@
         const records = JSON.parse(`{{records|tojson}}`)
         
         function taskEdit(id, pid) {
-            let rec
+            let rec;
             records.filter((a, b)=> {
                 if(a.id == id){
-                    rec = a
+                    rec = a;
                 }
                 return b;
             })
-            document.getElementById("test1").setAttribute("value", rec.content); // innerHTML; // = rec.content;
+            //document.getElementById("test1").setAttribute("value", rec.content); // innerHTML; // = rec.content; value="" id="test1">
             document.getElementById("editForm").setAttribute("action", "/project/" + pid + "/task_update/" + id);
         }
+
+        function close_flash_message() {
+            document.all.alertmessage.style.display='none';
+            return false;
+        }
+
+        // $(document).ready(function() {
+        //     $("#success-alert").hide();
+        //     $("#myWish").click(function showAlert() {
+        //         $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+        //             $("#success-alert").slideUp(500);
+        //         });
+        //     });
+        // });
     </script>
 
 </div>

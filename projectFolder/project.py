@@ -1,10 +1,12 @@
-from flask import  Blueprint, render_template, Flask, url_for, request, redirect, Blueprint, abort
+from flask import  Blueprint, render_template, Flask, url_for, request, redirect, Blueprint, abort, flash
 from datetime import datetime
 import decimal
 
+from werkzeug.exceptions import UnsupportedMediaType
+
 from htmlProject.model import db
 from htmlProject.model.models import Project, Tasks
-from htmlProject.forms import ProjectForm, TaskForm
+from htmlProject.forms import ProjectForm, TaskForm, UpdateTaskForm
 # from htmlProject.app import convert_sqlobj_json
 # from htmlProject.app import convert_one_sqlobj_json
 
@@ -31,6 +33,7 @@ def home():
 def task(id):
     project = Project.query.filter_by(id=id).first()
     form = TaskForm()
+    form1 = UpdateTaskForm()
     if request.method == 'POST':
         task_content = form.content.data
         date_picked = form.date.data.strftime('%Y-%m-%d')
@@ -45,7 +48,7 @@ def task(id):
         task_table = Tasks.query.filter_by(project_id=id).all()
         records = convert_sqlobj_json(task_table)
         projects = Project.query.order_by(Project.date_due).all()
-        return render_template('task.html', tasks=task_table, project=project, projects=projects, form=form, records=records)
+        return render_template('task.html', tasks=task_table, project=project, projects=projects, form=form, records=records, form1=form1)
 
 @projectRoute.route('/<int:id>/project_delete')
 def pdelete(id):
@@ -70,9 +73,12 @@ def delete(id, pid):
 @projectRoute.route('/<int:pid>/task_update/<int:id>', methods=['POST'])
 def update(id, pid):
     task = Tasks.query.get_or_404(id)
-    task.content = request.form['content']
+    form = UpdateTaskForm()
+    task.content = form.content.data
+    task.date_due = form.date.data.strftime('%Y-%m-%d')
     try:
         db.session.commit()
+        flash("Success! Task saved.")
         return redirect('/project/'+str(pid))
     except:
         return 'There is a problem'

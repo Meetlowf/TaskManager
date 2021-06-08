@@ -10,3 +10,7 @@ class ProjectForm(FlaskForm):
 class TaskForm(FlaskForm):
     content = StringField('New Task:', validators=[DataRequired()])
     date = DateField('Date Due:', validators=[DataRequired()], format='%Y-%m-%d')
+
+class UpdateTaskForm(FlaskForm):
+    content = StringField('Update Task:', validators=[DataRequired()])
+    date = DateField('Date Due:', validators=[DataRequired()], format='%Y-%m-%d')
