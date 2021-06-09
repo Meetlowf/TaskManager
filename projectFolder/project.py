@@ -1,14 +1,10 @@
-from flask import  Blueprint, render_template, Flask, url_for, request, redirect, Blueprint, abort, flash
+from flask import  Blueprint, render_template, request, redirect, Blueprint, flash
 from datetime import datetime
 import decimal
-
-from werkzeug.exceptions import UnsupportedMediaType
 
 from htmlProject.model import db
 from htmlProject.model.models import Project, Tasks
 from htmlProject.forms import ProjectForm, TaskForm, UpdateTaskForm
-# from htmlProject.app import convert_sqlobj_json
-# from htmlProject.app import convert_one_sqlobj_json
 
 projectRoute = Blueprint("projectRoute", __name__)
 
@@ -46,6 +42,7 @@ def task(id):
             return 'There was a problem'
     else:
         task_table = Tasks.query.filter_by(project_id=id).all()
+        task_table.sort(key=lambda x: (x.done, x.date_due))
         records = convert_sqlobj_json(task_table)
         projects = Project.query.order_by(Project.date_due).all()
         return render_template('task.html', tasks=task_table, project=project, projects=projects, form=form, records=records, form1=form1)

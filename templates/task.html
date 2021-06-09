@@ -154,7 +154,7 @@
             let form  = document.getElementById('editForm');
             let nodeDate = form[3];
             let nodeTask = form[1];
-            nodeDate.setAttribute("value", rec.content); // innerHTML; // = rec.content; value="" id="test1">
+            nodeDate.setAttribute("value", rec.content);
             nodeTask.setAttribute("value", rec.date_due);
             document.getElementById("editForm").setAttribute("action", "/project/" + pid + "/task_update/" + id);
         }
@@ -163,15 +163,6 @@
             document.all.alertmessage.style.display='none';
             return false;
         }
-
-        // $(document).ready(function() {
-        //     $("#success-alert").hide();
-        //     $("#myWish").click(function showAlert() {
-        //         $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-        //             $("#success-alert").slideUp(500);
-        //         });
-        //     });
-        // });
     </script>
 
 </div>
