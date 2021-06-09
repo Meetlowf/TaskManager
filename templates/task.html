@@ -2,6 +2,7 @@
 
 {% block head %}
 <title> Task Manager ({{project.name}}) </title>
+<link rel="icon" href="https://cdn.fastly.picmonkey.com/content4/previews/main/picmoji/lightning_550.png" type="image/x-icon">
 {% endblock %}
 
 {% block body %}
@@ -149,7 +150,12 @@
                 }
                 return b;
             })
-            //document.getElementById("test1").setAttribute("value", rec.content); // innerHTML; // = rec.content; value="" id="test1">
+
+            let form  = document.getElementById('editForm');
+            let nodeDate = form[3];
+            let nodeTask = form[1];
+            nodeDate.setAttribute("value", rec.content); // innerHTML; // = rec.content; value="" id="test1">
+            nodeTask.setAttribute("value", rec.date_due);
             document.getElementById("editForm").setAttribute("action", "/project/" + pid + "/task_update/" + id);
         }
 
