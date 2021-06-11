@@ -14,8 +14,8 @@ h1 {
 }
 
 .table-pos {
-    padding-left: 300px;
-    padding-right: 300px;
+    margin-left: 250px;
+    margin-right: 250px; 
 }
 
 .form {
@@ -50,4 +50,17 @@ form {
 .alert.alert-success{
     margin-left: 500px;
     margin-right: 500px;
+}
+
+.alert.alert-danger{
+    margin-left: 500px;
+    margin-right: 500px;
+}
+
+.control {
+    padding: 5px;
+}
+
+.buttonpadding {
+    padding: 5px;
 }

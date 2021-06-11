@@ -1,5 +1,6 @@
 from . import db
 from datetime import datetime
+# from flask_login import UserMixin
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,3 +23,8 @@ class Tasks(db.Model):
     def __repr__(self):
         return '<Task %r>' % self.id
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(1000))

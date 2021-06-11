@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Sign Up </title>
+<link rel="icon" href="https://cdn.fastly.picmonkey.com/content4/previews/main/picmoji/lightning_550.png" type="image/x-icon">
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a href="/login" class="navbar-brand">
+                <span class="first">Project</span><span class="second">Manager</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link active" aria-current="page">Home</a>
+                    </li>
+                </ul>
+                <a href="/login" class="btn btn-outline-success">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="column is-4 is-offset-4">
+        <br>
+        <h1 class="title">Sign Up</h1>
+        <br>
+        <div class="box">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert" id="alertmessage">
+                        {{ messages[0] }}. Go to <a href="/login">login page</a>.
+                        <button type="button" class="close" data-dismiss="alert" onclick="close_flash_message();">x</button>
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <form method="POST" action="/login/signup">
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="password" name="password" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="buttonpadding">
+                    <button class="btn btn-primary" type="submit">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    function close_flash_message() {
+        document.all.alertmessage.style.display='none';
+        return false;
+    }
+</script>
+
+{% endblock %}
