@@ -12,14 +12,4 @@ def create_app():
     loginPath.init_app(app)
     model.init_app(app)
 
-    # login_manager = LoginManager()
-    # login_manager.login_view = 'loginRoute.login'
-    # login_manager.init_app(app)
-
-    # from htmlProject.model.models import User
-
-    # @login_manager.user_loader
-    # def load_user(user_id):
-    #     return User.query.get(int(user_id))
-
     return app

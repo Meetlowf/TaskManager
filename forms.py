@@ -14,9 +14,3 @@ class TaskForm(FlaskForm):
 class UpdateTaskForm(FlaskForm):
     content = StringField('Update Task:', validators=[DataRequired()])
     date = DateField('Date Due:', validators=[DataRequired()], format='%Y-%m-%d')
-
-# class LoginForm(FlaskForm):
-#     email = StringField('Email', validators=[DataRequired(),Email()])
-#     password = PasswordField('Password', validators=[DataRequired()])
-#     remember = BooleanField('Remember Me')
-#     submit = SubmitField('Login')

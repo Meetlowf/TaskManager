@@ -33,14 +33,11 @@ def signup():
         name = request.form.get('name')
         password = request.form.get('password')
         user = User.query.filter_by(email=email).first()
-        print("test")
         if user: #email already in use
             flash('Email address already exists')
-            print("test1")
             return redirect('/login/signup')
         new_user = User(email=email, name=name, password=password)
         try:
-            print("test2")
             db.session.add(new_user)
             db.session.commit()
             return redirect('/login/')
