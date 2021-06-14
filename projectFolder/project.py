@@ -16,7 +16,8 @@ def home():
         if request.method =='POST':
             project_name = form.content.data
             date_picked = form.date.data.strftime('%Y-%m-%d')
-            new_project = Project(name=project_name, date_due=date_picked)
+            session_email = session['user']
+            new_project = Project(name=project_name, date_due=date_picked, session_email=session_email)
             try:
                 db.session.add(new_project)
                 db.session.commit()
@@ -24,7 +25,8 @@ def home():
             except:
                 return 'There was a problem'
         else:
-            projects = Project.query.order_by(Project.date_due).all()
+            projects = Project.query.filter_by(session_email=session['user'])
+            projects = projects.order_by(Project.date_due).all()
             return render_template('project.html', projects=projects, form=form)
     flash('Please create an account')
     return redirect('/login')
@@ -32,7 +34,11 @@ def home():
 @projectRoute.route('/<int:id>', methods=['POST', 'GET'])
 def task(id):
     if(session['user']):
-        project = Project.query.filter_by(id=id).first()
+        projects = Project.query.filter_by(session_email=session['user'])
+        project = projects.filter_by(id=id).first()
+        if project is None:
+            flash("Please sign into correct account to access this page")
+            return redirect('/login')
         form = TaskForm()
         form1 = UpdateTaskForm()
         if request.method == 'POST':
@@ -49,7 +55,7 @@ def task(id):
             task_table = Tasks.query.filter_by(project_id=id).all()
             task_table.sort(key=lambda x: (x.done, x.date_due))
             records = convert_sqlobj_json(task_table)
-            projects = Project.query.order_by(Project.date_due).all()
+            projects = projects.order_by(Project.date_due).all()
             return render_template('task.html', tasks=task_table, project=project, projects=projects, form=form, records=records, form1=form1)
     flash('Please create an account')
     return redirect('/login')

@@ -8,6 +8,7 @@ class Project(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     tasks = db.relationship('Tasks', backref='owner', lazy='dynamic', cascade="all, delete-orphan")
     date_due = db.Column(db.String(200), nullable=False)
+    session_email = db.Column(db.String(200), nullable=False)
 
     def __repr__(self):
         return '<Project %r>' % self.id
